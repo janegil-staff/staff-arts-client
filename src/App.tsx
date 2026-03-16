@@ -11,6 +11,12 @@ import EventDetail from './pages/EventDetail'
 import ExhibitionDetail from './pages/ExhibitionDetail'
 import Profile from './pages/Profile'
 import Messages from './pages/Messages'
+import PrivacyPolicy from "./pages/PrivacyPolicy"
+import TermsOfService from "./pages/TermsOfService"
+import Register from "./pages/Register"
+import Login from "./pages/Login"
+import ProtectedRoute from "./components/ProtectedRoute"
+import EditProfile from "./pages/EditProfile"
 import ArtworkDetail from './pages/ArtworkDetail'
 
 export default function App() {
@@ -27,12 +33,18 @@ export default function App() {
             <Route path="/shows/events" element={<ShowEvents />} />
             <Route path="/shows/exhibitions" element={<ShowExhibitions />} />
             <Route path="/shows/music" element={<ShowMusic />} />
+            <Route path="/shows/create" element={<ProtectedRoute><div>Create Show</div></ProtectedRoute>} />
             <Route path="/events/:id" element={<EventDetail />} />
             <Route path="/exhibitions/:id" element={<ExhibitionDetail />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/profile/:id" element={<Profile />} />
             <Route path="/messages" element={<Messages />} />
             <Route path="/messages/:id" element={<Messages />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<TermsOfService />} />
+            <Route path="/edit-profile/:id" element={<ProtectedRoute><EditProfile /></ProtectedRoute>} />
             <Route path="/artwork/:id" element={<ArtworkDetail />} />
           </Routes>
         </div>

@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ImagePlus } from "lucide-react";
 import api from "../services/api";
 import { useNavigate } from "react-router-dom";
 
 export default function Upload() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (!localStorage.getItem("token")) navigate("/login")
+  }, []);
   const [form, setForm] = useState({ title: "", description: "", price: "" });
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
@@ -52,9 +56,9 @@ export default function Upload() {
         Upload Artwork
       </h1>
 
-      <label className="block mb-6 cursor-pointer">
+      <label className="block mb-6 cursor-pointer mx-auto" style={{ maxWidth: "512px" }}>
         <div
-          className="w-full h-64 rounded-2xl flex flex-col items-center justify-center overflow-hidden"
+          className="w-full rounded-2xl flex flex-col items-center justify-center overflow-hidden mx-auto" style={{ maxWidth: "512px" }} style={{ minHeight: "200px" }}
           style={{
             border: `2px dashed var(--border)`,
             background: "var(--bg-elevated)",
