@@ -47,7 +47,7 @@ export default function Explore() {
       </div>
 
       {loading ? (
-        <div className="columns-2 md:columns-3 lg:columns-4 gap-3 space-y-3">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
           {[...Array(8)].map((_, i) => (
             <div
               key={i}
@@ -57,12 +57,12 @@ export default function Explore() {
           ))}
         </div>
       ) : (
-        <div className="columns-2 md:columns-3 lg:columns-4 gap-3 space-y-3">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
           {artworks.map((artwork) => (
-            <div key={artwork.id} className="break-inside-avoid mb-3">
+            <div key={artwork.id} >
               <ArtworkCard
                 artwork={artwork}
-                size={Math.random() > 0.5 ? "lg" : "md"}
+                size="md"
               />
             </div>
           ))}

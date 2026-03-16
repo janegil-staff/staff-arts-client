@@ -7,6 +7,8 @@ import Shows from './pages/Shows'
 import ShowEvents from './pages/ShowEvents'
 import ShowExhibitions from './pages/ShowExhibitions'
 import ShowMusic from './pages/ShowMusic'
+import EventDetail from './pages/EventDetail'
+import ExhibitionDetail from './pages/ExhibitionDetail'
 import Profile from './pages/Profile'
 import Messages from './pages/Messages'
 import ArtworkDetail from './pages/ArtworkDetail'
@@ -25,6 +27,8 @@ export default function App() {
             <Route path="/shows/events" element={<ShowEvents />} />
             <Route path="/shows/exhibitions" element={<ShowExhibitions />} />
             <Route path="/shows/music" element={<ShowMusic />} />
+            <Route path="/events/:id" element={<EventDetail />} />
+            <Route path="/exhibitions/:id" element={<ExhibitionDetail />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/profile/:id" element={<Profile />} />
             <Route path="/messages" element={<Messages />} />
