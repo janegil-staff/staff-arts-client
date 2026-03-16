@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import { Home, Compass, Upload, Tv2, User, MessageCircle } from 'lucide-react'
+import { useUnreadTotal } from '../hooks/useUnread'
 
 const links = [
   { to: '/', icon: Home, label: 'Home' },
@@ -11,6 +12,8 @@ const links = [
 ]
 
 export default function Navbar() {
+  const unread = useUnreadTotal()
+
   return (
     <>
       {/* Top navbar - tablet and desktop */}
@@ -23,18 +26,23 @@ export default function Navbar() {
           {links.map(({ to, icon: Icon, label }) => (
             <NavLink key={to} to={to} end={to === '/'}
               className={({ isActive }) =>
-                `flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
-                  isActive
-                    ? 'text-white'
-                    : 'hover:bg-white/5'
+                `flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 relative ${
+                  isActive ? 'text-white' : 'hover:bg-white/5'
                 }`
               }
               style={({ isActive }) => ({
                 color: isActive ? 'var(--teal)' : 'var(--text-muted)',
                 background: isActive ? 'rgba(38,142,134,0.1)' : undefined,
-              })}
-            >
-              <Icon size={16} strokeWidth={1.5} />
+              })}>
+              <div className="relative">
+                <Icon size={16} strokeWidth={1.5} />
+                {label === 'Messages' && unread > 0 && (
+                  <span className="absolute -top-2 -right-2 flex items-center justify-center rounded-full text-white font-bold"
+                    style={{ background: '#ef4444', fontSize: '9px', minWidth: '16px', height: '16px', padding: '0 3px' }}>
+                    {unread > 99 ? '99+' : unread}
+                  </span>
+                )}
+              </div>
               {label}
             </NavLink>
           ))}
@@ -53,7 +61,15 @@ export default function Navbar() {
             }>
             {({ isActive }) => (
               <>
-                <Icon size={22} color={isActive ? 'var(--teal)' : 'var(--text)'} strokeWidth={isActive ? 2.5 : 1.5} />
+                <div className="relative">
+                  <Icon size={22} color={isActive ? 'var(--teal)' : 'var(--text)'} strokeWidth={isActive ? 2.5 : 1.5} />
+                  {label === 'Messages' && unread > 0 && (
+                    <span className="absolute -top-2 -right-2 flex items-center justify-center rounded-full text-white font-bold"
+                      style={{ background: '#ef4444', fontSize: '9px', minWidth: '16px', height: '16px', padding: '0 3px' }}>
+                      {unread > 99 ? '99+' : unread}
+                    </span>
+                  )}
+                </div>
                 <span className="text-xs" style={{ color: isActive ? 'var(--teal)' : 'var(--text-muted)' }}>
                   {label}
                 </span>

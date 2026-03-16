@@ -3,11 +3,19 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { ArrowLeft } from 'lucide-react'
 import api from '../services/api'
 
+const roles = [
+  { label: 'Artist', value: 'artist' },
+  { label: 'Collector', value: 'collector' },
+  { label: 'Gallery', value: 'gallery' },
+]
+
 export default function EditProfile() {
   const navigate = useNavigate()
   const { id } = useParams()
   const [user, setUser] = useState<any>(null)
-  const [form, setForm] = useState({ name: '', displayName: '', bio: '', location: '', username: '' })
+  const [form, setForm] = useState({
+    name: '', displayName: '', bio: '', location: '', username: '', role: 'collector'
+  })
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
@@ -23,6 +31,7 @@ export default function EditProfile() {
           bio: u.bio || '',
           location: u.location || '',
           username: u.username || '',
+          role: u.role || 'collector',
         })
       })
       .catch(() => navigate('/login'))
@@ -100,6 +109,28 @@ export default function EditProfile() {
             />
           </div>
         ))}
+
+        {/* Role */}
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-wider mb-2"
+            style={{ color: 'var(--text-muted)' }}>I am a...</p>
+          <div className="flex gap-2">
+            {roles.map(r => (
+              <button key={r.value}
+                onClick={() => setForm(f => ({ ...f, role: r.value }))}
+                className="flex-1 py-2.5 rounded-full text-sm font-medium transition-all"
+                style={{
+                  background: form.role === r.value ? 'var(--teal)' : 'var(--bg-elevated)',
+                  border: `1px solid ${form.role === r.value ? 'var(--teal)' : 'var(--border)'}`,
+                  color: form.role === r.value ? 'white' : 'var(--text-muted)',
+                }}>
+                {r.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Bio */}
         <div>
           <p className="text-xs font-semibold uppercase tracking-wider mb-1.5"
             style={{ color: 'var(--text-muted)' }}>Bio</p>

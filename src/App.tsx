@@ -16,6 +16,8 @@ import TermsOfService from "./pages/TermsOfService"
 import Register from "./pages/Register"
 import Login from "./pages/Login"
 import ProtectedRoute from "./components/ProtectedRoute"
+import ArtistProfile from "./pages/ArtistProfile"
+import Settings from "./pages/Settings"
 import EditProfile from "./pages/EditProfile"
 import ArtworkDetail from './pages/ArtworkDetail'
 
@@ -37,13 +39,14 @@ export default function App() {
             <Route path="/events/:id" element={<EventDetail />} />
             <Route path="/exhibitions/:id" element={<ExhibitionDetail />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/profile/:id" element={<Profile />} />
+            <Route path="/profile/:id" element={<ArtistProfile />} />
             <Route path="/messages" element={<Messages />} />
             <Route path="/messages/:id" element={<Messages />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<TermsOfService />} />
+            <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
             <Route path="/edit-profile/:id" element={<ProtectedRoute><EditProfile /></ProtectedRoute>} />
             <Route path="/artwork/:id" element={<ArtworkDetail />} />
           </Routes>
