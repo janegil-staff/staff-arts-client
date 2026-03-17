@@ -22,6 +22,7 @@ import EditProfile from "./pages/EditProfile";
 import ArtworkDetail from "./pages/ArtworkDetail";
 import SavedArtworks from "./pages/SavedArtworks";
 import MyArtworks from "./pages/MyArtworks";
+import ForgotPassword from "./pages/ForgotPassword";
 
 export default function App() {
   return (
@@ -74,6 +75,7 @@ export default function App() {
             <Route path="/artwork/:id" element={<ArtworkDetail />} />
             <Route path="/my-artworks" element={<MyArtworks />} />
             <Route path="/saved-artworks" element={<SavedArtworks />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
           </Routes>
         </div>
       </div>
