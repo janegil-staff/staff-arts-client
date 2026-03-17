@@ -46,7 +46,7 @@ export default function ArtworkCard({ artwork, size = 'md' }: Props) {
           <img
             src={imageUrl}
             alt={artwork.title}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            className="no-save w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center"

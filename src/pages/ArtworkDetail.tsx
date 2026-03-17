@@ -55,7 +55,7 @@ export default function ArtworkDetail() {
           <img
             src={imageUrl}
             alt={artwork.title}
-            className="w-full object-cover"
+            className="w-full no-save object-cover"
             style={{ maxHeight: "60vh" }}
           />
         ) : (
@@ -256,7 +256,7 @@ export default function ArtworkDetail() {
                   key={i}
                   src={img.url}
                   alt={`${artwork.title} ${i + 1}`}
-                  className="w-24 h-24 rounded-xl object-cover flex-shrink-0"
+                  className="w-24 h-24 no-save rounded-xl object-cover flex-shrink-0"
                   style={{ border: "1px solid var(--border)" }}
                 />
               ))}
@@ -306,7 +306,24 @@ export default function ArtworkDetail() {
                   Message
                 </button>
               )}
+
               <button
+                onClick={async () => {
+                  try {
+                    const res = await api.post("/conversations", {
+                      participantId: artistId,
+                    });
+                    const convo = res.data.data;
+                    const convoId = convo._id || convo.id;
+                    navigate(`/messages/${convoId}`, {
+                      state: {
+                        prefillMessage: `Hi! I'm interested in buying "${artwork.title}" — is it still available?`,
+                      },
+                    });
+                  } catch (e) {
+                    console.error(e);
+                  }
+                }}
                 className="flex-1 flex items-center justify-center gap-2 py-4 rounded-xl font-semibold text-white"
                 style={{ background: "var(--teal)" }}
               >

@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --teal: #268E86;
+  --teal: #268e86;
   --teal-light: #2fa89f;
   --bg: #0a0a0a;
   --bg-card: #111111;
@@ -11,15 +11,32 @@
   --text-muted: #888888;
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: 'DM Sans', sans-serif;
+  font-family: "DM Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 2px;
+}
+
+@layer utilities {
+  .no-save {
+    -webkit-user-drag: none;
+    pointer-events: none;
+    user-select: none;
+  }
+}

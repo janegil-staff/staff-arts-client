@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, Search, X, Send } from "lucide-react";
 import api from "../services/api";
 import { getSocket, reconnectSocket } from "../services/socket";
@@ -395,16 +395,18 @@ function ChatScreen({
   name,
   participantId,
   onBack,
+  prefillMessage,
 }: {
   conversationId: string;
   name: string;
   participantId: string;
   onBack: () => void;
+  prefillMessage?: string;
 }) {
   const [messages, setMessages] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [sending, setSending] = useState(false);
-  const [text, setText] = useState("");
+  const [text, setText] = useState(prefillMessage || "");
   const [myId, setMyId] = useState("");
   const [convoId, setConvoId] = useState(conversationId);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -650,6 +652,8 @@ function ChatScreen({
 export default function Messages() {
   const navigate = useNavigate();
   const { id } = useParams();
+  const location = useLocation();
+  const prefill = location.state?.prefillMessage || "";
   const [activeChat, setActiveChat] = useState<{
     id: string;
     name: string;
@@ -698,6 +702,7 @@ export default function Messages() {
             name={activeChat.name || "Chat"}
             participantId={activeChat.participantId}
             onBack={closeChat}
+            prefillMessage={prefill}
           />
         ) : (
           <ConversationsList onOpen={openChat} />
