@@ -265,30 +265,57 @@ export default function ArtworkDetail() {
         )}
 
         {/* Actions */}
-        {artwork.forSale && artwork.price > 0 && (
-          <div className="flex gap-3 mt-2">
-            {artist && (
+        {(() => {
+          const myId = localStorage.getItem("myUserId");
+          const isOwner = myId && myId === artistId;
+
+          if (isOwner) {
+            return (
+              <div className="flex gap-3 mt-2">
+                <button
+                  onClick={async () => {
+                    if (!confirm("Delete this artwork?")) return;
+                    try {
+                      await api.delete(`/artworks/${id}`);
+                      navigate("/my-artworks");
+                    } catch (e) {
+                      console.error(e);
+                    }
+                  }}
+                  className="flex-1 flex items-center justify-center gap-2 py-4 rounded-xl font-semibold text-white"
+                  style={{ background: "#ef4444" }}
+                >
+                  Delete Artwork
+                </button>
+              </div>
+            );
+          }
+
+          return artwork.forSale && artwork.price > 0 ? (
+            <div className="flex gap-3 mt-2">
+              {artist && (
+                <button
+                  onClick={handleMessage}
+                  className="flex-1 flex items-center justify-center gap-2 py-4 rounded-xl font-semibold transition-opacity"
+                  style={{
+                    border: "1px solid var(--teal)",
+                    color: "var(--teal)",
+                  }}
+                >
+                  <MessageCircle size={18} />
+                  Message
+                </button>
+              )}
               <button
-                onClick={handleMessage}
-                className="flex-1 flex items-center justify-center gap-2 py-4 rounded-xl font-semibold transition-opacity"
-                style={{
-                  border: "1px solid var(--teal)",
-                  color: "var(--teal)",
-                }}
+                className="flex-1 flex items-center justify-center gap-2 py-4 rounded-xl font-semibold text-white"
+                style={{ background: "var(--teal)" }}
               >
-                <MessageCircle size={18} />
-                Message
+                <ShoppingBag size={18} />
+                Buy Now
               </button>
-            )}
-            <button
-              className="flex-1 flex items-center justify-center gap-2 py-4 rounded-xl font-semibold text-white"
-              style={{ background: "var(--teal)" }}
-            >
-              <ShoppingBag size={18} />
-              Buy Now
-            </button>
-          </div>
-        )}
+            </div>
+          ) : null;
+        })()}
       </div>
     </div>
   );
