@@ -72,7 +72,16 @@ export default function App() {
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="/edit-profile"
+              element={
+                <ProtectedRoute>
+                  <EditProfile />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/artwork/:id" element={<ArtworkDetail />} />
+            <Route path="/artworks/:id" element={<ArtworkDetail />} />
             <Route path="/my-artworks" element={<MyArtworks />} />
             <Route path="/saved-artworks" element={<SavedArtworks />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />

@@ -36,7 +36,7 @@ export default function Profile() {
     setUploadingAvatar(true)
     try {
       const { url } = await uploadImage(file)
-      await api.patch(`/mobile/users/${user._id}`, { avatar: url })
+      await api.patch(`/users/${user._id}`, { avatar: url })
       setUser((u: any) => ({ ...u, avatar: url }))
     } catch (err) {
       console.error('Avatar upload failed', err)
@@ -51,7 +51,7 @@ export default function Profile() {
     setUploadingCover(true)
     try {
       const { url } = await uploadImage(file)
-      await api.patch(`/mobile/users/${user._id}`, { coverImage: url })
+      await api.patch(`/users/${user._id}`, { coverImage: url })
       setUser((u: any) => ({ ...u, coverImage: url }))
     } catch (err) {
       console.error('Cover upload failed', err)

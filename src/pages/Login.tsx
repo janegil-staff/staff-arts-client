@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Eye, EyeOff } from 'lucide-react'
 import api from "../services/api";
 
 export default function Login() {
@@ -7,6 +8,7 @@ export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async () => {
     if (!form.email || !form.password) return;
@@ -70,17 +72,27 @@ export default function Login() {
             className="w-full px-4 py-3 rounded-xl text-sm outline-none"
             style={inputStyle}
           />
-          <input
-            type="password"
-            placeholder="Password"
-            value={form.password}
-            onChange={(e) =>
-              setForm((f) => ({ ...f, password: e.target.value }))
-            }
-            onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
-            className="w-full px-4 py-3 rounded-xl text-sm outline-none"
-            style={inputStyle}
-          />
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              value={form.password}
+              onChange={(e) =>
+                setForm((f) => ({ ...f, password: e.target.value }))
+              }
+              onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
+              className="w-full px-4 py-3 rounded-xl text-sm outline-none pr-12"
+              style={inputStyle}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((v) => !v)}
+              className="absolute right-4 top-1/2 -translate-y-1/2"
+              style={{ color: "var(--text-muted)" }}
+            >
+              {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+            </button>
+          </div>
 
           {/* Add this below the password input */}
           <div className="flex justify-end mt-1">
