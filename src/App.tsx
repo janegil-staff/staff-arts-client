@@ -23,6 +23,7 @@ import ArtworkDetail from "./pages/ArtworkDetail";
 import SavedArtworks from "./pages/SavedArtworks";
 import MyArtworks from "./pages/MyArtworks";
 import ForgotPassword from "./pages/ForgotPassword";
+import CreateShow from "./pages/CreateShow";
 
 export default function App() {
   return (
@@ -42,7 +43,7 @@ export default function App() {
               path="/shows/create"
               element={
                 <ProtectedRoute>
-                  <div>Create Show</div>
+                  <CreateShow />
                 </ProtectedRoute>
               }
             />
