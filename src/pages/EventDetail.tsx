@@ -10,6 +10,13 @@ import {
 } from "lucide-react";
 import api from "../services/api";
 
+function safeDate(d: any, opts: Intl.DateTimeFormatOptions) {
+  if (!d) return "";
+  const date = new Date(d);
+  if (isNaN(date.getTime())) return "";
+  return date.toLocaleDateString("en-GB", opts);
+}
+
 const musicTypes: Record<string, string> = {
   concert: "Concert",
   dj_set: "DJ Set",
@@ -65,20 +72,20 @@ export default function EventDetail() {
   const typeColor = isMusic ? "#c084fc" : "#2dd4a0";
   const typeLabel = musicTypes[event.type] || "Event";
 
-  const dateStr = event.date
-    ? new Date(event.date).toLocaleDateString("en-GB", {
-        weekday: "long",
-        month: "long",
-        day: "numeric",
-        year: "numeric",
-      })
-    : "";
-  const timeStr = event.date
-    ? new Date(event.date).toLocaleTimeString("en-GB", {
-        hour: "2-digit",
-        minute: "2-digit",
-      })
-    : "";
+  const rawDate = event.date ?? event.startDate;
+  const dateStr = safeDate(rawDate, {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+  const timeStr =
+    rawDate && !isNaN(new Date(rawDate).getTime())
+      ? new Date(rawDate).toLocaleTimeString("en-GB", {
+          hour: "2-digit",
+          minute: "2-digit",
+        })
+      : "";
 
   return (
     <div className="min-h-screen max-w-2xl mx-auto">

@@ -30,8 +30,9 @@ interface EventItem {
 }
 
 function EventBanner({ item, onClick }: { item: EventItem, onClick: () => void }) {
-  const start = new Date(item.startDate)
-  const end = new Date(item.endDate)
+const start = new Date(item.startDate ?? item.date)
+const end = new Date(item.endDate ?? item.startDate ?? item.date)
+
   const now = new Date()
   const isLive = start <= now && end >= now
   const daysUntil = Math.ceil((start.getTime() - now.getTime()) / (1000 * 60 * 60 * 24))
@@ -84,7 +85,7 @@ function EventBanner({ item, onClick }: { item: EventItem, onClick: () => void }
         <div className="flex items-center justify-between mt-1">
           <div className="flex items-center gap-3">
             <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
-              📅 {start.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })} — {end.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+              📅 {!isNaN(start.getTime()) ? start.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }) : ''} — {!isNaN(end.getTime()) ? end.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : ''}
             </span>
             {item.location && (
               <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
@@ -121,11 +122,11 @@ export default function Home() {
         const now = new Date()
 
         const events: EventItem[] = (evtRes.data.data || [])
-          .filter((e: any) => new Date(e.endDate) >= now)
+          .filter((e: any) => new Date(e.endDate ?? e.date) >= now)
           .map((e: any) => ({ ...e, itemType: 'event' as const }))
 
         const exhibitions: EventItem[] = (exhRes.data.data || [])
-          .filter((e: any) => new Date(e.endDate) >= now)
+          .filter((e: any) => new Date(e.endDate ?? e.date) >= now)
           .map((e: any) => ({ ...e, itemType: 'exhibition' as const }))
 
         const mixed = [...events, ...exhibitions]
