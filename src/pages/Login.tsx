@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Eye, EyeOff } from 'lucide-react'
+import { Eye, EyeOff } from "lucide-react";
 import api from "../services/api";
 
 export default function Login() {
@@ -19,6 +19,7 @@ export default function Login() {
       const token = res.data.data?.accessToken;
       if (token) {
         localStorage.setItem("token", token);
+        window.dispatchEvent(new Event("storage"));
         navigate("/");
       } else {
         setError("Invalid response from server");

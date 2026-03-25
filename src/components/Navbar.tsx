@@ -1,18 +1,28 @@
 import { NavLink } from "react-router-dom";
 import { Home, Compass, Upload, Tv2, User, MessageCircle } from "lucide-react";
 import { useUnreadTotal } from "../hooks/useUnread";
+import { useEffect, useState } from "react";
 
-const links = [
+const allLinks = [
   { to: "/", icon: Home, label: "Home" },
   { to: "/explore", icon: Compass, label: "Explore" },
   { to: "/upload", icon: Upload, label: "Upload" },
   { to: "/shows", icon: Tv2, label: "Shows" },
-  { to: "/messages", icon: MessageCircle, label: "Messages" },
+  { to: "/messages", icon: MessageCircle, label: "Messages", authOnly: true },
   { to: "/profile", icon: User, label: "Profile" },
 ];
 
 export default function Navbar() {
   const unread = useUnreadTotal();
+  const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem('token'));
+
+  useEffect(() => {
+    const handleStorage = () => setLoggedIn(!!localStorage.getItem('token'));
+    window.addEventListener('storage', handleStorage);
+    return () => window.removeEventListener('storage', handleStorage);
+  }, []);
+
+  const links = allLinks.filter(link => !link.authOnly || loggedIn);
 
   return (
     <>
