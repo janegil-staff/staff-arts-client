@@ -30,8 +30,8 @@ interface EventItem {
 }
 
 function EventBanner({ item, onClick }: { item: EventItem, onClick: () => void }) {
-const start = new Date(item.startDate ?? item.date)
-const end = new Date(item.endDate ?? item.startDate ?? item.date)
+  const start = new Date(item.startDate)
+  const end = new Date(item.endDate ?? item.startDate)
 
   const now = new Date()
   const isLive = start <= now && end >= now
@@ -122,11 +122,11 @@ export default function Home() {
         const now = new Date()
 
         const events: EventItem[] = (evtRes.data.data || [])
-          .filter((e: any) => new Date(e.endDate ?? e.date) >= now)
+          .filter((e: any) => new Date(e.endDate ?? e.startDate) >= now)
           .map((e: any) => ({ ...e, itemType: 'event' as const }))
 
         const exhibitions: EventItem[] = (exhRes.data.data || [])
-          .filter((e: any) => new Date(e.endDate ?? e.date) >= now)
+          .filter((e: any) => new Date(e.endDate ?? e.startDate) >= now)
           .map((e: any) => ({ ...e, itemType: 'exhibition' as const }))
 
         const mixed = [...events, ...exhibitions]
