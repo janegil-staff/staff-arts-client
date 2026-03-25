@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: 'https://staff-arts-api.onrender.com/api',
+  baseURL: 'https://staffarts-app-api-o4hbf.ondigitalocean.app/api',
   headers: { 'Content-Type': 'application/json' },
 })
 

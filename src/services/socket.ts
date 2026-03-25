@@ -4,7 +4,7 @@ let socket: Socket | null = null
 
 export function getSocket(): Socket {
   if (!socket) {
-    socket = io('https://staff-arts-api.onrender.com', {
+    socket = io('https://staffarts-app-api-o4hbf.ondigitalocean.app', {
       transports: ['websocket'],
       autoConnect: false,
     })
